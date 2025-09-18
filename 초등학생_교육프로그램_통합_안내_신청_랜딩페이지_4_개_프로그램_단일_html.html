@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>초등학생 교육프로그램 통합 안내 · 신청</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <meta name="description" content="초등학생 교육프로그램(4개) 통합 안내 및 신청 페이지" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Noto Sans KR',sans-serif}
+    .card:hover{transform:translateY(-2px);}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- 헤더 -->
+  <header class="bg-white border-b sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-xl md:text-2xl font-bold">초등학생 교육프로그램 통합 안내</h1>
+      <button id="downloadQR" class="hidden md:inline-flex text-sm border rounded-xl px-3 py-2 hover:bg-gray-50">QR 코드 저장</button>
+    </div>
+  </header>
+
+  <!-- 안내 배너 -->
+  <section class="max-w-6xl mx-auto px-4 mt-6">
+    <div class="bg-indigo-50 border border-indigo-100 rounded-2xl p-4 md:p-6">
+      <h2 class="text-lg md:text-xl font-semibold mb-2">한눈에 보는 4개 프로그램</h2>
+      <p class="text-sm md:text-base text-gray-700 leading-relaxed">
+        아래 카드에서 원하는 프로그램을 선택해 <span class="font-semibold">신청하기</span>를 누르시면 각 프로그램별 <span class="font-semibold">개별 Google Form</span>으로 이동합니다.
+        신청 현황(모집중/대기/마감)도 실시간으로 확인할 수 있습니다.
+      </p>
+      <div class="mt-3 text-xs text-gray-600">※ 문의: edu@example.ac.kr · 062-000-0000</div>
+    </div>
+  </section>
+
+  <!-- 필터/정렬 -->
+  <section class="max-w-6xl mx-auto px-4 mt-4">
+    <div class="flex flex-col md:flex-row gap-3 md:items-center justify-between">
+      <div class="flex gap-2 items-center">
+        <label class="text-sm text-gray-600">상태:</label>
+        <select id="statusFilter" class="border rounded-xl px-3 py-2 text-sm">
+          <option value="all">전체</option>
+          <option value="open">모집중</option>
+          <option value="wait">대기접수</option>
+          <option value="closed">마감</option>
+        </select>
+      </div>
+      <div class="flex gap-2 items-center">
+        <label class="text-sm text-gray-600">정렬:</label>
+        <select id="sortSelect" class="border rounded-xl px-3 py-2 text-sm">
+          <option value="time">일시 순</option>
+          <option value="grade">학년 순</option>
+          <option value="title">프로그램명</option>
+        </select>
+      </div>
+    </div>
+  </section>
+
+  <!-- 프로그램 카드 그리드 -->
+  <main class="max-w-6xl mx-auto px-4 mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="programGrid"></main>
+
+  <!-- 하단 도움말 -->
+  <section class="max-w-6xl mx-auto px-4 mt-8 mb-16">
+    <div class="bg-white border rounded-2xl p-5">
+      <h3 class="font-semibold mb-2">운영/관리 팁</h3>
+      <ul class="list-disc ml-5 text-sm text-gray-700 space-y-1">
+        <li>각 프로그램은 <span class="font-semibold">별도 Google Form</span>과 <span class="font-semibold">별도 응답 스프레드시트</span>로 관리합니다.</li>
+        <li>정원 도달 시 <span class="font-semibold">대기접수</span> 또는 <span class="font-semibold">마감</span>으로 상태를 변경하세요.</li>
+        <li>아래의 <span class="font-mono">PROGRAMS</span> 설정만 수정하면 카드 내용과 상태가 갱신됩니다.</li>
+        <li>페이지 주소를 QR 코드로 인쇄물/포스터에 삽입하면 신청자가 한 페이지에서 4개 프로그램을 비교·선택할 수 있습니다.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- QR 모달 (선택) -->
+  <div id="qrModal" class="fixed inset-0 hidden bg-black/40 items-center justify-center p-4">
+    <div class="bg-white rounded-2xl p-6 w-full max-w-sm">
+      <div class="flex items-center justify-between mb-3">
+        <h4 class="font-semibold">이 페이지 QR 코드</h4>
+        <button id="closeQR" class="text-sm px-2 py-1 border rounded-lg">닫기</button>
+      </div>
+      <div id="qrcode" class="mx-auto flex items-center justify-center"></div>
+      <button id="saveQR" class="mt-4 w-full border rounded-xl py-2 hover:bg-gray-50">PNG로 저장</button>
+    </div>
+  </div>
+
+  <!-- 단일 설정(JSON) -->
+  <script>
+  // 🔧 여기를 수정하여 4개 프로그램 정보를 관리하세요.
+  // status: 'open'(모집중) | 'wait'(대기접수) | 'closed'(마감)
+  const PROGRAMS = [
+    {
+      id: 'p1',
+      title: '로봇 코딩 기초(블록코딩)',
+      grade: '초3–초4',
+      date: '2025-10-11(토) 10:00–12:00',
+      location: '조선대 공학관 101호',
+      capacity: 24,
+      seatsLeft: 6,
+      status: 'open',
+      tags: ['코딩','블록','팀활동'],
+      formUrl: 'https://forms.gle/xxxxxxxxx1'
+    },
+    {
+      id: 'p2',
+      title: 'AI 센서·IoT 놀이터',
+      grade: '초4–초5',
+      date: '2025-10-18(토) 10:00–12:00',
+      location: '조선대 메이커스페이스',
+      capacity: 20,
+      seatsLeft: 0,
+      status: 'wait',
+      tags: ['IoT','센서','AI'],
+      formUrl: 'https://forms.gle/xxxxxxxxx2'
+    },
+    {
+      id: 'p3',
+      title: '자율주행 미니카 챌린지',
+      grade: '초5–초6',
+      date: '2025-10-25(토) 13:30–16:30',
+      location: '조선대 체육관',
+      capacity: 18,
+      seatsLeft: 18,
+      status: 'open',
+      tags: ['로봇','자율주행','대회'],
+      formUrl: 'https://forms.gle/xxxxxxxxx3'
+    },
+    {
+      id: 'p4',
+      title: '드론 안전·비행 기초',
+      grade: '초5–초6',
+      date: '2025-11-01(토) 10:00–12:00',
+      location: '조선대 운동장',
+      capacity: 20,
+      seatsLeft: 0,
+      status: 'closed',
+      tags: ['드론','안전'],
+      formUrl: 'https://forms.gle/xxxxxxxxx4'
+    }
+  ];
+
+  // 상태 배지
+  function statusBadge(status){
+    const map={
+      open:{text:'모집중',cls:'bg-green-100 text-green-800 border-green-200'},
+      wait:{text:'대기접수',cls:'bg-amber-100 text-amber-800 border-amber-200'},
+      closed:{text:'마감',cls:'bg-gray-200 text-gray-700 border-gray-300'}
+    };
+    const s=map[status]||map.closed;
+    return `<span class="border ${s.cls} text-xs px-2 py-1 rounded-lg">${s.text}</span>`
+  }
+
+  function renderCards(list){
+    const grid=document.getElementById('programGrid');
+    grid.innerHTML='';
+    list.forEach(p=>{
+      const fill = Math.max(0, Math.min(100, Math.round(100*(p.capacity - p.seatsLeft)/p.capacity)));
+      const disabled = p.status==='closed';
+      grid.insertAdjacentHTML('beforeend', `
+        <article class="card bg-white border rounded-2xl p-4 transition shadow-sm">
+          <div class="flex items-start justify-between gap-2">
+            <h3 class="font-semibold leading-snug text-base">${p.title}</h3>
+            ${statusBadge(p.status)}
+          </div>
+          <div class="mt-2 text-sm text-gray-600">대상: ${p.grade}</div>
+          <div class="mt-1 text-sm text-gray-600">일시: ${p.date}</div>
+          <div class="mt-1 text-sm text-gray-600">장소: ${p.location}</div>
+          <div class="mt-3">
+            <div class="flex items-center justify-between text-xs text-gray-600"><span>정원 ${p.capacity}명</span><span>잔여 ${p.seatsLeft}명</span></div>
+            <div class="w-full h-2 bg-gray-100 rounded-full mt-1"><div class="h-2 rounded-full bg-indigo-400" style="width:${fill}%"></div></div>
+          </div>
+          <div class="mt-3 flex flex-wrap gap-1">${p.tags.map(t=>`<span class='text-xs bg-gray-100 border border-gray-200 rounded-full px-2 py-0.5'>#${t}</span>`).join('')}</div>
+          <a href="${p.formUrl}" target="_blank" rel="noopener" class="mt-4 block text-center text-sm font-medium ${disabled?'bg-gray-200 text-gray-500 cursor-not-allowed':'bg-indigo-600 text-white hover:bg-indigo-700'} rounded-xl py-2" ${disabled?'aria-disabled="true" tabindex="-1"':''}>
+            ${disabled?'마감됨':'신청하기 (Google Form)'}
+          </a>
+        </article>
+      `);
+    })
+  }
+
+  function applyFilterAndSort(){
+    const status=document.getElementById('statusFilter').value;
+    const sort=document.getElementById('sortSelect').value;
+    let list=[...PROGRAMS];
+    if(status!=='all') list=list.filter(p=>p.status===status);
+    if(sort==='time') list.sort((a,b)=>a.date.localeCompare(b.date));
+    if(sort==='grade') list.sort((a,b)=>a.grade.localeCompare(b.grade));
+    if(sort==='title') list.sort((a,b)=>a.title.localeCompare(b.title));
+    renderCards(list);
+  }
+
+  document.getElementById('statusFilter').addEventListener('change', applyFilterAndSort);
+  document.getElementById('sortSelect').addEventListener('change', applyFilterAndSort);
+
+  // 초기 렌더
+  renderCards(PROGRAMS);
+  </script>
+
+  <!-- QR 코드: qrcodejs -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+  <script>
+    const btn = document.getElementById('downloadQR');
+    const modal = document.getElementById('qrModal');
+    const closeBtn = document.getElementById('closeQR');
+    const saveBtn = document.getElementById('saveQR');
+    let qrcodeInstance = null;
+
+    function openQR(){
+      modal.classList.remove('hidden');
+      modal.classList.add('flex');
+      const el = document.getElementById('qrcode');
+      el.innerHTML='';
+      const url = window.location.href;
+      qrcodeInstance = new QRCode(el, { text: url, width: 240, height: 240 });
+    }
+    function closeQR(){ modal.classList.add('hidden'); modal.classList.remove('flex'); }
+
+    btn.addEventListener('click', openQR);
+    closeBtn.addEventListener('click', closeQR);
+
+    saveBtn.addEventListener('click', ()=>{
+      if(!qrcodeInstance) return;
+      // canvas를 이미지로 저장
+      const img = document.querySelector('#qrcode img');
+      const canvas = document.querySelector('#qrcode canvas');
+      const src = (img && img.src) || (canvas && canvas.toDataURL('image/png'));
+      if(!src) return;
+      const a = document.createElement('a');
+      a.href = src; a.download = 'programs-qr.png'; a.click();
+    });
+  </script>
+
+  <!-- (선택) Google Apps Script 연계 아이디어
+    1) 각 Form의 응답 스프레드시트에서 현재 신청 인원 수를 집계해 배포용 JSON을 생성
+       - Google Apps Script로 doGet(e) 웹앱을 만들어 {id, seatsLeft, status} 배열 JSON을 반환
+       - 이 페이지에서 fetch("웹앱URL")로 주기적 갱신 → PROGRAMS에 merge
+    2) 정원 도달 시 자동으로 Form을 꺼두거나(응답 일시 중지), 안내 문구를 변경하는 자동화 스크립트 작성
+  -->
+</body>
+</html>
