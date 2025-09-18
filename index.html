@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>초등학생 로봇교육 통합 안내 · 신청</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+  <style>
+    body{font-family:'Noto Sans KR',sans-serif}
+    .card:hover{transform:translateY(-2px)}
+  </style>
+</head>
+<body class="bg-gray-50 text-gray-900">
+  <!-- 헤더 (QR/관리자 안내 제거) -->
+  <header class="bg-white border-b sticky top-0 z-30">
+    <div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
+      <h1 class="text-xl md:text-2xl font-bold">초등학생 로봇교육 통합 안내</h1>
+    </div>
+  </header>
+
+  <!-- 간단 안내문 -->
+  <section class="max-w-6xl mx-auto px-4 mt-6">
+    <div class="bg-white border rounded-2xl p-4 md:p-6">
+      <p class="text-sm md:text-base text-gray-700">
+        원하는 프로그램 카드를 선택해 <span class="font-semibold">신청하기</span> 버튼을 누르면 각 프로그램의 <span class="font-semibold">개별 Google Form</span>으로 이동합니다.
+        (현재는 URL 미기재 상태)
+      </p>
+    </div>
+  </section>
+
+  <!-- 프로그램 카드 그리드 (대상/구글폼/키워드만 표시) -->
+  <main class="max-w-6xl mx-auto px-4 mt-6 grid sm:grid-cols-2 lg:grid-cols-4 gap-4" id="programGrid"></main>
+
+  <script>
+  // === 프로그램 데이터 (대상/폼/키워드) ===
+  const PROGRAMS = [
+    {
+      id: 'iot',
+      title: 'IoT 센서블럭 실습 및 코딩',
+      grade: '초1–초3 (20명)',
+      formUrl: 'https://forms.gle/_______',
+      tags: ['IoT','언플러그드','AI 음성인식','알버트','블록코딩']
+    },
+    {
+      id: 'tpbot',
+      title: 'TPBot과 AI렌즈',
+      grade: '초1–초3 (20명)',
+      formUrl: 'https://forms.gle/_______',
+      tags: ['TPBot','AI 렌즈','마이크로비트','라인트레킹','장애물감지','색/숫자/화살표 인식']
+    },
+    {
+      id: 'rms1',
+      title: '로봇 블록 코딩',
+      grade: '초4–초6 (20명)',
+      formUrl: 'https://forms.gle/_______',
+      tags: ['RoboMaster S1','스크래치','순차/반복/조건','로봇 제어']
+    },
+    {
+      id: 'drone',
+      title: '코딩으로 즐기는 드론',
+      grade: '초4–초6 (20명)',
+      formUrl: 'https://forms.gle/_______',
+      tags: ['드론','블록코딩','미션','장애물 회피']
+    }
+  ];
+
+  function renderCards(list){
+    const grid=document.getElementById('programGrid');
+    grid.innerHTML='';
+    list.forEach(p=>{
+      const url=(p.formUrl||'').trim();
+      const waiting = url.includes('_______') || url==='' || url==='#';
+      grid.insertAdjacentHTML('beforeend', `
+        <article class="card bg-white border rounded-2xl p-4 transition shadow-sm">
+          <h3 class="font-semibold leading-snug text-base">${p.title}</h3>
+          <div class="mt-2 text-sm text-gray-600">대상: ${p.grade}</div>
+          <div class="mt-3 flex flex-wrap gap-1">${p.tags.map(t=>`<span class='text-xs bg-gray-100 border border-gray-200 rounded-full px-2 py-0.5'>#${t}</span>`).join('')}</div>
+          <a href="${waiting ? '#' : url}" target="${waiting ? '' : '_blank'}" rel="noopener"
+             class="mt-4 block text-center text-sm font-medium ${waiting ? 'bg-gray-200 text-gray-500 cursor-not-allowed' : 'bg-indigo-600 text-white hover:bg-indigo-700'} rounded-xl py-2"
+             ${waiting ? 'aria-disabled="true" tabindex="-1"' : ''}>
+            ${waiting ? '신청 링크 준비중' : '신청하기 (Google Form)'}
+          </a>
+        </article>
+      `);
+    });
+  }
+  document.addEventListener('DOMContentLoaded',()=>renderCards(PROGRAMS));
+  </script>
+</body>
+</html>
