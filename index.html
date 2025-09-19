@@ -84,16 +84,27 @@
       border-radius: 12px; text-decoration: none;
     }
     .apply:hover { background: var(--primary-700); }
+
+
+    .note {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 16px;
+      margin-top: 20px;
+    }
+    .note-title { margin: 0 0 10px; font-size: 16px; font-weight: 800; }
+    .note ul { margin: 0; padding-left: 18px; font-size: 14px; color: #374151; }
+    .note li { margin: 6px 0; }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
-      <h1>초등학생 대상 로봇코딩 교육 신청</h1>
-
-      <!-- 공지 박스: 버튼 없이 안내만 표시 -->
+      <h1>🤖 초등학생 대상 로봇코딩 교육 신청</h1>
       <aside class="notice" aria-label="신청 안내">
-        <h2 class="notice-title">신청 안내</h2>
+        <h2 class="notice-title">📢 신청 안내</h2>
         <p class="notice-desc">
           아래 프로그램 내용을 확인하시고 참여하고 싶은 프로그램 카드 내 <strong>신청하기</strong> 버튼을 클릭해 구글폼을 통해 신청해주세요.
         </p>
@@ -105,102 +116,80 @@
     <div class="wrap">
       <section class="grid" aria-live="polite">
 
-        <!-- 카드 1: IoT 센서블럭 실습 및 코딩 -->
+        <!-- 카드 1: (초급)IoT 센서블럭 실습 및 코딩 -->
         <article class="card">
-          <h3 class="title">(초급)IoT 센서블럭 실습 및 코딩</h3>
-          <div class="row">대상: 초1–초3 (20명)</div>
-          <div class="row">운영시간: 10:00–13:00</div>
-          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8층</div>
+          <h3 class="title">🧩 (초급)IoT 센서블럭 실습 및 코딩</h3>
+          <div class="row">👧👦 대상: 초1–초3 (20명)</div>
+          <div class="row">⏰ 운영시간: 10:00–13:00</div>
+          <div class="row">📍 교육장소: 조선대학교 공과대학 제 1호관 8층</div>
           <div class="chips">
             <span class="chip">#IoT</span>
             <span class="chip">#센서</span>
             <span class="chip">#음성인식</span>
             <span class="chip">#블록코딩</span>
           </div>
-          <ul class="list">
-            <li>센서 동작 원리 이해</li>
-            <li>블록코딩 기초</li>
-            <li>음성인식 체험</li>
-          </ul>
-          <a class="apply" href="https://forms.gle/tbKxknaUR7LUZ26U9">
-            신청하기
-          </a>
+          <a class="apply" href="https://forms.gle/tbKxknaUR7LUZ26U9">📝 신청하기</a>
         </article>
 
-        <!-- 카드 2: TPBot과 AI렌즈 -->
+        <!-- 카드 2: (초급)TPBot과 AI렌즈 -->
         <article class="card">
-          <h3 class="title">(초급)TPBot과 AI렌즈</h3>
-          <div class="row">대상: 초1–초3 (20명)</div>
-          <div class="row">운영시간: 10:00–13:00</div>
-          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8층</div>
+          <h3 class="title">🤖 (초급)TPBot과 AI렌즈</h3>
+          <div class="row">👧👦 대상: 초1–초3 (20명)</div>
+          <div class="row">⏰ 운영시간: 10:00–13:00</div>
+          <div class="row">📍 교육장소: 조선대학교 공과대학 제 1호관 8층</div>
           <div class="chips">
             <span class="chip">#TPBot</span>
             <span class="chip">#AI렌즈</span>
             <span class="chip">#마이크로비트</span>
             <span class="chip">#라인트레킹</span>
           </div>
-          <ul class="list">
-            <li>라인트레킹/장애물 인식</li>
-            <li>AI렌즈 색·숫자·화살표 인식</li>
-            <li>팀 미션 수행</li>
-          </ul>
-          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSFOHNAB_PRRHNLMPBKZGRCY58UTN6J7LLUTPO-g83MGN82LG/ViewForm=Header" target="_blank" rel="noopener">
-            신청하기
-          </a>
+          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSFOHNAB_PRRHNLMPBKZGRCY58UTN6J7LLUTPO-g83MGN82LG/ViewForm=Header" target="_blank" rel="noopener">📝 신청하기</a>
         </article>
 
-        <!-- 카드 3: 로봇 블록 코딩 -->
+        <!-- 카드 3: (중급)로봇 블록 코딩 -->
         <article class="card">
-          <h3 class="title">(중급)로봇 블록 코딩</h3>
-          <div class="row">대상: 초4–초6 (20명)</div>
-          <div class="row">운영시간: 14:00–17:00</div>
-          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8층</div>
+          <h3 class="title">🛠️ (중급)로봇 블록 코딩</h3>
+          <div class="row">👦🧒 대상: 초4–초6 (20명)</div>
+          <div class="row">⏰ 운영시간: 14:00–17:00</div>
+          <div class="row">📍 교육장소: 조선대학교 공과대학 제 1호관 8층</div>
           <div class="chips">
             <span class="chip">#RoboMaster S1</span>
             <span class="chip">#스크래치</span>
             <span class="chip">#제어</span>
             <span class="chip">#조건·반복</span>
           </div>
-          <ul class="list">
-            <li>스크래치 기반 로봇 제어</li>
-            <li>순차·조건·반복 명령</li>
-            <li>주행 미션</li>
-          </ul>
-          <a class="apply" href="https://docs.google.com/forms/d/E/1FAIPQLSFIAAL2PDCVOF_D7PSYPZYWZLNDQJPXDMVW9EUW3GJX9GWMW/Header" target="_blank" rel="noopener">
-            신청하기
-          </a>
+          <a class="apply" href="https://docs.google.com/forms/d/E/1FAIPQLSFIAAL2PDCVOF_D7PSYPZYWZLNDQJPXDMVW9EUW3GJX9GWMW/Header" target="_blank" rel="noopener">📝 신청하기</a>
         </article>
 
-        <!-- 카드 4: 코딩으로 즐기는 드론 -->
+        <!-- 카드 4: (중급)코딩으로 즐기는 드론 -->
         <article class="card">
-          <h3 class="title">(중급)코딩으로 즐기는 드론</h3>
-          <div class="row">대상: 초4–초6 (20명)</div>
-          <div class="row">운영시간: 14:00–17:00</div>
-          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8층</div>
+          <h3 class="title">🚁 (중급)코딩으로 즐기는 드론</h3>
+          <div class="row">👦🧒 대상: 초4–초6 (20명)</div>
+          <div class="row">⏰ 운영시간: 14:00–17:00</div>
+          <div class="row">📍 교육장소: 조선대학교 공과대학 제 1호관 8층</div>
           <div class="chips">
             <span class="chip">#드론코딩</span>
             <span class="chip">#미션</span>
             <span class="chip">#장애물회피</span>
             <span class="chip">#기초비행</span>
           </div>
-          <ul class="list">
-            <li>드론 안전/기초 비행</li>
-            <li>블록코딩 비행 제어</li>
-            <li>장애물 회피 미션</li>
-          </ul>
-          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSEJIDWJ0N25S_2D75HNTPZA8HILV-SPT_PXDCHAGNQ4K8IBA/VIEWOSP=HEADER" target="_blank" rel="noopener">
-            신청하기
-          </a>
+          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSEJIDWJ0N25S_2D75HNTPZA8HILV-SPT_PXDCHAGNQ4K8IBA/VIEWOSP=HEADER" target="_blank" rel="noopener">📝 신청하기</a>
         </article>
 
       </section>
+
+
+      <section class="note" aria-label="신청 전 유의사항">
+        <h2 class="note-title">ℹ️ 신청 전 유의사항</h2>
+        <ul>
+          <li>⚠️ 선착순 마감이며, 정원 초과 시 신청이 제한될 수 있습니다.</li>
+          <li>🕒 시작 10분 전까지 교육장 입실을 완료해 주세요.</li>
+          <li>👨‍👩‍👧‍👦 보호자 연락처를 정확히 입력해 주세요(긴급 연락용).</li>
+          <li>📎 준비물/안전수칙은 신청 후 안내 문자로 재공지됩니다.</li>
+        </ul>
+      </section>
+
     </div>
   </main>
 </body>
 </html>
-
-
-
-
-
-
