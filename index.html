@@ -31,9 +31,8 @@
     }
     .wrap { max-width: var(--container); margin: 0 auto; padding: 16px; }
     h1 { margin: 0; font-size: 20px; font-weight: 800; }
-    main { padding-top: 12px; padding-bottom: 24px; }
 
-    /* 공지 박스 */
+    /* 공지 박스 (버튼 제거, 안내 문구만) */
     .notice {
       background: var(--card);
       border: 1px solid var(--border);
@@ -43,19 +42,10 @@
       margin-top: 12px;
     }
     .notice-title { margin: 0 0 8px; font-size: 16px; font-weight: 800; }
-    .notice-desc { margin: 0 0 12px; font-size: 14px; color: var(--muted); }
-    .notice-links { display: grid; gap: 8px; grid-template-columns: repeat(1, minmax(0,1fr)); }
-    @media (min-width: 640px) { .notice-links { grid-template-columns: repeat(2, minmax(0,1fr)); } }
-    @media (min-width: 1024px){ .notice-links { grid-template-columns: repeat(4, minmax(0,1fr)); } }
-    .btn {
-      display: block; text-align: center;
-      padding: 10px 12px; font-size: 14px; font-weight: 600;
-      color: #fff; background: var(--primary);
-      border-radius: 12px; text-decoration: none;
-    }
-    .btn:hover { background: var(--primary-700); }
+    .notice-desc { margin: 0; font-size: 14px; color: var(--muted); }
 
     /* 카드 그리드 */
+    main { padding: 16px 0 28px; }
     .grid {
       display: grid; gap: 16px;
       grid-template-columns: repeat(1, minmax(0, 1fr));
@@ -75,172 +65,137 @@
     .card:hover { transform: translateY(-2px); }
     .title { font-weight: 700; font-size: 16px; margin: 0; }
     .row { margin-top: 6px; font-size: 14px; color: var(--muted); }
+
     .chips { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
     .chip {
       font-size: 12px; color: #374151;
       padding: 4px 8px; border: 1px solid var(--border);
       background: #f3f4f6; border-radius: 999px;
     }
-    .list {
-      margin: 8px 0 0; padding-left: 18px; color: #374151; font-size: 14px;
-    }
+
+    .list { margin: 8px 0 0; padding-left: 18px; color: #374151; font-size: 14px; }
     .list li { margin: 2px 0; }
+
+    .apply {
+      display: block; text-align: center;
+      margin-top: 14px; padding: 10px 12px;
+      font-size: 14px; font-weight: 600;
+      color: #fff; background: var(--primary);
+      border-radius: 12px; text-decoration: none;
+    }
+    .apply:hover { background: var(--primary-700); }
   </style>
 </head>
 <body>
   <header>
     <div class="wrap">
       <h1>초등학생 로봇교육 통합 안내</h1>
-      <!-- 공지 박스 (신청 안내 + 프로그램별 빠른 이동) -->
+
+      <!-- 공지 박스: 버튼 없이 안내만 표시 -->
       <aside class="notice" aria-label="신청 안내">
         <h2 class="notice-title">신청 안내</h2>
-        <p class="notice-desc">아래 버튼을 눌러 프로그램별 Google Form으로 이동해 신청해 주세요. (주소는 추후 수정 가능)</p>
-        <div id="noticeLinks" class="notice-links"></div>
+        <p class="notice-desc">
+          아래 프로그램 카드에서 내용을 확인하시고 각 카드의 <strong>신청하기</strong> 버튼으로 이동해 주세요.
+          (구글 폼 주소는 추후 정확한 viewform 링크로 교체 가능합니다)
+        </p>
       </aside>
     </div>
   </header>
 
   <main>
     <div class="wrap">
-      <section id="programGrid" class="grid" aria-live="polite"></section>
+      <section class="grid" aria-live="polite">
+
+        <!-- 카드 1: IoT 센서블럭 실습 및 코딩 -->
+        <article class="card">
+          <h3 class="title">IoT 센서블럭 실습 및 코딩</h3>
+          <div class="row">대상: 초1–초3 (20명)</div>
+          <div class="row">운영시간: 10:00–13:00</div>
+          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8203 강의실</div>
+          <div class="chips">
+            <span class="chip">#IoT</span>
+            <span class="chip">#센서</span>
+            <span class="chip">#음성인식</span>
+            <span class="chip">#블록코딩</span>
+          </div>
+          <ul class="list">
+            <li>센서 동작 원리 이해</li>
+            <li>블록코딩 기초</li>
+            <li>음성인식 체험</li>
+          </ul>
+          <a class="apply" href="https://docs.google.com/forms/d/e/1faipqlsfy7ysizlxbtxznkiaw1pagrl4db_bfc8hfx0if8-gmtw/ViewForm?" target="_blank" rel="noopener">
+            신청하기 (Google Form)
+          </a>
+        </article>
+
+        <!-- 카드 2: TPBot과 AI렌즈 -->
+        <article class="card">
+          <h3 class="title">TPBot과 AI렌즈</h3>
+          <div class="row">대상: 초1–초3 (20명)</div>
+          <div class="row">운영시간: 10:00–13:00</div>
+          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8206 강의실</div>
+          <div class="chips">
+            <span class="chip">#TPBot</span>
+            <span class="chip">#AI렌즈</span>
+            <span class="chip">#마이크로비트</span>
+            <span class="chip">#라인트레킹</span>
+          </div>
+          <ul class="list">
+            <li>라인트레킹/장애물 인식</li>
+            <li>AI렌즈 색·숫자·화살표 인식</li>
+            <li>팀 미션 수행</li>
+          </ul>
+          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSFOHNAB_PRRHNLMPBKZGRCY58UTN6J7LLUTPO-g83MGN82LG/ViewForm=Header" target="_blank" rel="noopener">
+            신청하기 (Google Form)
+          </a>
+        </article>
+
+        <!-- 카드 3: 로봇 블록 코딩 -->
+        <article class="card">
+          <h3 class="title">로봇 블록 코딩</h3>
+          <div class="row">대상: 초4–초6 (20명)</div>
+          <div class="row">운영시간: 14:00–17:00</div>
+          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8203 강의실</div>
+          <div class="chips">
+            <span class="chip">#RoboMaster S1</span>
+            <span class="chip">#스크래치</span>
+            <span class="chip">#제어</span>
+            <span class="chip">#조건·반복</span>
+          </div>
+          <ul class="list">
+            <li>스크래치 기반 로봇 제어</li>
+            <li>순차·조건·반복 명령</li>
+            <li>주행 미션</li>
+          </ul>
+          <a class="apply" href="https://docs.google.com/forms/d/E/1FAIPQLSFIAAL2PDCVOF_D7PSYPZYWZLNDQJPXDMVW9EUW3GJX9GWMW/Header" target="_blank" rel="noopener">
+            신청하기 (Google Form)
+          </a>
+        </article>
+
+        <!-- 카드 4: 코딩으로 즐기는 드론 -->
+        <article class="card">
+          <h3 class="title">코딩으로 즐기는 드론</h3>
+          <div class="row">대상: 초4–초6 (20명)</div>
+          <div class="row">운영시간: 14:00–17:00</div>
+          <div class="row">교육장소: 조선대학교 공과대학 제 1호관 8206 강의실</div>
+          <div class="chips">
+            <span class="chip">#드론코딩</span>
+            <span class="chip">#미션</span>
+            <span class="chip">#장애물회피</span>
+            <span class="chip">#기초비행</span>
+          </div>
+          <ul class="list">
+            <li>드론 안전/기초 비행</li>
+            <li>블록코딩 비행 제어</li>
+            <li>장애물 회피 미션</li>
+          </ul>
+          <a class="apply" href="https://docs.google.com/forms/d/E/E/1FAIPQLSEJIDWJ0N25S_2D75HNTPZA8HILV-SPT_PXDCHAGNQ4K8IBA/VIEWOSP=HEADER" target="_blank" rel="noopener">
+            신청하기 (Google Form)
+          </a>
+        </article>
+
+      </section>
     </div>
   </main>
-
-  <script>
-    // ─────────────────────────────────────────
-    // 1) 헤더 공지 박스에 노출할 Google Form 링크 (사용자 제공 URL 원문 반영)
-    //    * URL 형식이 일부 상이할 수 있으므로, 나중에 실제 viewform 주소로 교체해 주세요.
-    const HEADER_FORMS = [
-      { label: "IoT 센서블럭 실습 및 코딩", url: "https://docs.google.com/forms/d/e/1faipqlsfy7ysizlxbtxznkiaw1pagrl4db_bfc8hfx0if8-gmtw/ViewForm?" },
-      { label: "TPBot과 AI렌즈",            url: "https://docs.google.com/forms/d/E/E/1FAIPQLSFOHNAB_PRRHNLMPBKZGRCY58UTN6J7LLUTPO-g83MGN82LG/ViewForm=Header" },
-      { label: "로봇 블록 코딩",            url: "https://docs.google.com/forms/d/E/1FAIPQLSFIAAL2PDCVOF_D7PSYPZYWZLNDQJPXDMVW9EUW3GJX9GWMW/Header" },
-      { label: "코딩으로 즐기는 드론",      url: "https://docs.google.com/forms/d/E/E/1FAIPQLSEJIDWJ0N25S_2D75HNTPZA8HILV-SPT_PXDCHAGNQ4K8IBA/VIEWOSP=HEADER" }
-    ];
-
-    // 2) 프로그램 데이터 (프로그램명/대상/운영시간/키워드/교육내용/폼 링크)
-    //    * 일단 폼 링크는 HEADER_FORMS 순서대로 연결했습니다. 나중에 정확한 주소로 교체하세요.
-    const PROGRAMS = [
-      {
-        id: "iot",
-        title: "IoT 센서블럭 실습 및 코딩",
-        grade: "초1–초3 (20명)",
-        hours: "10:00–13:00",
-        keywords: ["IoT", "센서", "음성인식", "블록코딩"],
-        training: ["센서 동작 원리 이해", "블록코딩 기초", "음성인식 체험"],
-        formUrl: HEADER_FORMS[0].url
-      },
-      {
-        id: "tpbot",
-        title: "TPBot과 AI렌즈",
-        grade: "초1–초3 (20명)",
-        hours: "10:00–13:00",
-        keywords: ["TPBot", "AI렌즈", "마이크로비트", "라인트레킹"],
-        training: ["라인트레킹/장애물 인식", "AI렌즈 색·숫자·화살표 인식", "팀 미션 수행"],
-        formUrl: HEADER_FORMS[1].url
-      },
-      {
-        id: "rms1",
-        title: "로봇 블록 코딩",
-        grade: "초4–초6 (20명)",
-        hours: "14:00–17:00",
-        keywords: ["RoboMaster S1", "스크래치", "제어", "조건·반복"],
-        training: ["스크래치 기반 로봇 제어", "순차·조건·반복 명령", "주행 미션"],
-        formUrl: HEADER_FORMS[2].url
-      },
-      {
-        id: "drone",
-        title: "코딩으로 즐기는 드론",
-        grade: "초4–초6 (20명)",
-        hours: "14:00–17:00",
-        keywords: ["드론코딩", "미션", "장애물회피", "기초비행"],
-        training: ["드론 안전/기초 비행", "블록코딩 비행 제어", "장애물 회피 미션"],
-        formUrl: HEADER_FORMS[3].url
-      }
-    ];
-
-    // 공지 박스 렌더링
-    (function renderNoticeLinks() {
-      const box = document.getElementById("noticeLinks");
-      HEADER_FORMS.forEach(item => {
-        const a = document.createElement("a");
-        a.className = "btn";
-        a.href = (item.url || "#").trim();
-        a.target = "_blank";
-        a.rel = "noopener";
-        a.textContent = item.label + " 신청하기";
-        box.appendChild(a);
-      });
-    })();
-
-    // 카드 생성
-    function makeCard(p) {
-      const art = document.createElement("article");
-      art.className = "card";
-
-      const h3 = document.createElement("h3");
-      h3.className = "title";
-      h3.textContent = p.title;
-      art.appendChild(h3);
-
-      const r1 = document.createElement("div");
-      r1.className = "row";
-      r1.textContent = "대상: " + p.grade;
-      art.appendChild(r1);
-
-      const r2 = document.createElement("div");
-      r2.className = "row";
-      r2.textContent = "운영시간: " + p.hours;
-      art.appendChild(r2);
-
-      // 키워드 칩
-      if (p.keywords && p.keywords.length) {
-        const chips = document.createElement("div");
-        chips.className = "chips";
-        p.keywords.forEach(k => {
-          const span = document.createElement("span");
-          span.className = "chip";
-          span.textContent = "#" + k;
-          chips.appendChild(span);
-        });
-        art.appendChild(chips);
-      }
-
-      // 교육내용 목록
-      if (p.training && p.training.length) {
-        const ul = document.createElement("ul");
-        ul.className = "list";
-        p.training.forEach(t => {
-          const li = document.createElement("li");
-          li.textContent = t;
-          ul.appendChild(li);
-        });
-        art.appendChild(ul);
-      }
-
-      const a = document.createElement("a");
-      a.className = "btn";
-      a.href = (p.formUrl || "#").trim();
-      a.target = "_blank";
-      a.rel = "noopener";
-      a.textContent = "신청하기 (Google Form)";
-      art.appendChild(a);
-
-      return art;
-    }
-
-    function render(list) {
-      const grid = document.getElementById("programGrid");
-      grid.innerHTML = "";
-      list.forEach(p => grid.appendChild(makeCard(p)));
-    }
-
-    (function init(){
-      if (document.readyState === "loading") {
-        document.addEventListener("DOMContentLoaded", () => render(PROGRAMS));
-      } else {
-        render(PROGRAMS);
-      }
-    })();
-  </script>
 </body>
 </html>
